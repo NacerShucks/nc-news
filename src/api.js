@@ -14,11 +14,13 @@ export const getTopics = () => {
 export const getArticles = (queries) => {
     const queryArr = []
     for (const key in queries){
-        queryArr.push(`?${key}=${queries.key}`)
+        if(queries[key] !== ""){
+            queryArr.push(`?${key}=${queries.key}`) 
+        }
     }
     const queryStr = queryArr.join("")
     return NCnewsAPI.get(`/articles${queryStr}`).then((response) => {
-        return response.data.articles
+        return response.data
     })
 } 
 
