@@ -2,40 +2,12 @@ import { useState, useEffect } from "react"
 import { getTopics } from "../api"
 
 export default function FilterBar(props){
-    const {queries, setQueries, allArticles} = props
+    const {queries, setQueries, authors, articleFeilds} = props
     const [topics, setTopics] = useState([])
+    getTopics().then((topics) => {
+        setTopics(topics)
+    })
 
-    const [articleFeilds, setArticleFeilds] = useState([])
-    const [authors, setAuthors] = useState([])
-
-    useEffect(() => {
-        const newFeilds = []
-        for(const key in allArticles[0]){
-            newFeilds.push(key)
-        }
-        setArticleFeilds(
-            newFeilds
-        )
-    }, [])
-
-    useEffect(() => {
-        const notedAuthors = []
-        for(let i = 0; i < allArticles.length; i++){
-            if(!notedAuthors.includes(allArticles[i].author)){
-                notedAuthors.push(allArticles[i].author)
-            }  
-        }
-        setAuthors(
-            notedAuthors
-        )
-    }, [])
-
-
-    useEffect(() => {
-        getTopics().then((topics) => {
-            setTopics(topics)
-        })
-    }, [])
 
     const handleSelects = (inputName, e) => {
         setQueries((currQueries) => {
@@ -43,47 +15,50 @@ export default function FilterBar(props){
             newQueries[inputName] = e.target.value
             return newQueries
         })
+        
+        console.log("🚀 ~ handleSelects ~ queries:", queries)
     }
-    
+        
+     
 
     return (
         <nav className="nav_menu" id="nav_menu">
-            <select id="author" name="author" value={queries.author} onChange={(e) => {handleSelects("author", e)}}>
-                <option value=''>
+            <select key={"author"} id="author" name="author" value={queries.author} onChange={(e) => {handleSelects("author", e)}}>
+                <option key={"defaultAuthor"} defaultValue={""}>
                 author
                 </option>
                 {
                     authors.map((author) => {
                         return (
-                            <option value={author}>
+                            <option key={author + "author"} value={author}>
                                 {author}
                             </option>
                         )
                     })
                 }
             </select>
-            <select id="topic" name="topic" value={queries.topic} onChange={(e) => {handleSelects("topic", e)}}>
-                <option value=''>
+            <select key={"topic"} id="topic" name="topic" value={queries.topic} onChange={(e) => {handleSelects("topic", e)}}>
+                <option key={"defaultTopic"} defaultValue=''>
                 topic
                 </option>
                 {
                     topics.map((topic) => {
                         return (
-                            <option value={topic.slug}>
+                            <option key={topic.slug + "topic"} value={topic.slug}>
                                 {topic.slug}
                             </option>
                         )
                     })
                 }
             </select>
-            <select id="sortBy" name="sortBy" value={queries.sortBy} onChange={(e) => {handleSelects("sortBy", e)}}>
-                <option value=''>
+            <select key={"sort_by"} id="sort_by" name="sort_by" value={queries.sortBy} onChange={(e) => {handleSelects("sort_by", e)}}>
+                <option key={"defaultSortBy"} defaultValue=''>
                 sort by
                 </option>
                 {
                     articleFeilds.map((feild) => {
                         return (
-                            <option value={feild}>
+                            <option key={feild + "feild"} value={feild}>
                                 {feild}
                             </option>
                         )
@@ -91,14 +66,14 @@ export default function FilterBar(props){
                 }
 
             </select>
-            <select id="order" name="order" value={queries.order} onChange={(e) => {handleSelects("order", e)}}>
-                <option value=''>
+            <select key={"order"} id="order" name="order" value={queries.order} onChange={(e) => {handleSelects("order", e)}}>
+                <option key={"defaultOrder"} defaultValue=''>
                 order
                 </option>
-                <option value='asc'>
+                <option key={"asc"} value='asc'>
                 ascending
                 </option>
-                <option value='desc'>
+                <option key={"desc"} value='desc'>
                 descending
                 </option>
             </select>

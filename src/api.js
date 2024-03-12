@@ -15,7 +15,7 @@ export const getArticles = (queries) => {
     const queryArr = []
     for (const key in queries){
         if(queries[key] !== ""){
-            queryArr.push(`?${key}=${queries.key}`) 
+            queryArr.push(`?${key}=${queries[key]}`) 
         }
     }
     const queryStr = queryArr.join("")
