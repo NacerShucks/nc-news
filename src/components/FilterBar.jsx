@@ -4,43 +4,35 @@ import { getTopics } from "../api"
 export default function FilterBar(props){
     const {queries, setQueries, authors, articleFeilds} = props
     const [topics, setTopics] = useState([])
+    const [selects, setSelects] = useState({
+        topic: "",
+        sort_by: "",
+        order: ""
+    })
     getTopics().then((topics) => {
         setTopics(topics)
     })
 
 
     const handleSelects = (inputName, e) => {
-        setQueries((currQueries) => {
-            const newQueries = {...currQueries}
-            newQueries[inputName] = e.target.value
-            return newQueries
+        setSelects((currQueries) => {
+            const newSelects = {...currQueries}
+            newSelects[inputName] = e.target.value
+            return newSelects
         })
-        
-        console.log("🚀 ~ handleSelects ~ queries:", queries)
     }
-        
+    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setQueries(selects)
+    }
      
 
     return (
-        <nav className="nav_menu" id="nav_menu">
-            <select key={"author"} id="author" name="author" value={queries.author} onChange={(e) => {handleSelects("author", e)}}>
-                <option key={"defaultAuthor"} defaultValue={""}>
-                author
-                </option>
-                {
-                    authors.map((author) => {
-                        return (
-                            <option key={author + "author"} value={author}>
-                                {author}
-                            </option>
-                        )
-                    })
-                }
-            </select>
-            <select key={"topic"} id="topic" name="topic" value={queries.topic} onChange={(e) => {handleSelects("topic", e)}}>
-                <option key={"defaultTopic"} defaultValue=''>
-                topic
-                </option>
+        <form className="nav_menu" id="nav_menu" onSubmit={handleSubmit}>
+            topic
+            <select key={"topic"} id="topic" name="topic" value={selects.topic} onChange={(e) => {handleSelects("topic", e)}}>
+                
                 {
                     topics.map((topic) => {
                         return (
@@ -51,10 +43,8 @@ export default function FilterBar(props){
                     })
                 }
             </select>
-            <select key={"sort_by"} id="sort_by" name="sort_by" value={queries.sortBy} onChange={(e) => {handleSelects("sort_by", e)}}>
-                <option key={"defaultSortBy"} defaultValue=''>
-                sort by
-                </option>
+            sort
+            <select key={"sort_by"} id="sort_by" name="sort_by" value={selects.sort_by} onChange={(e) => {handleSelects("sort_by", e)}}>
                 {
                     articleFeilds.map((feild) => {
                         return (
@@ -66,10 +56,8 @@ export default function FilterBar(props){
                 }
 
             </select>
-            <select key={"order"} id="order" name="order" value={queries.order} onChange={(e) => {handleSelects("order", e)}}>
-                <option key={"defaultOrder"} defaultValue=''>
-                order
-                </option>
+            order
+            <select key={"order"} id="order" name="order" value={selects.order} onChange={(e) => {handleSelects("order", e)}}>
                 <option key={"asc"} value='asc'>
                 ascending
                 </option>
@@ -77,7 +65,8 @@ export default function FilterBar(props){
                 descending
                 </option>
             </select>
-        </nav>
+            <button type="submit">Submit</button>
+        </form>
             
     )
 }

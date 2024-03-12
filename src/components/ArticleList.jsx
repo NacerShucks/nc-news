@@ -10,25 +10,26 @@ export default function ArticleList (){
     const [authors, setAuthors] = useState([])
     const [allArticles, setAllArticles] = useState([{article_id:1},{article_id:2},{article_id:3},{article_id:4},{article_id:5}])
     const [queries, setQueries] = useState({
-        author: "",
         topic: "",
-        sortBy: "",
+        sort_by: "",
         order: ""
     })
 
 
     
     useEffect(() => {
+        console.log("getting articles...")
         getArticles(queries).then((articles) => {  
+            console.log("got articles", articles)
             setAllArticles(articles)
-            setArticleFeilds(Object.keys(allArticles[0]))
-            const authorsDoubles = allArticles.map((article) => article.author)
-            setAuthors([...new Set(authorsDoubles)])
-            console.log(authors)
         }).catch((err) => {
             console.log("🚀 ~ getArticles ~ err:", err)
         })
     }, [queries])
+
+    useEffect(() => {
+        setArticleFeilds(Object.keys(allArticles[0]))
+    }, [allArticles])
 
     return (
         <>
