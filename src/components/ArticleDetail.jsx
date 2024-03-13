@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getArticle } from "../api"
+import { getArticle, patchArticle } from "../api"
 
 import CommentBox from "./CommentBox"
 
@@ -9,11 +9,33 @@ export default function ArticleDetail (){
     const [article, setArticle] = useState({})
     const {articleId} = useParams()
     const [isLoading, setIsLoading] = useState(true)
+    const [votes, setVotes] = useState(0)
 
-    getArticle(articleId).then((article) => {
-        setIsLoading(false)
-        setArticle(article)
-    })
+    const handleDownVote = () => {
+        setVotes((currVotes) => currVotes - 1)
+        patchArticle(articleId, {inc_votes: -1}).then((article) => {
+            setVotes(article.votes)
+        }).catch((err) => {
+            setVotes(article.votes)
+        })
+    }
+    const handleUpVote = () => {
+        setVotes((currVotes) => currVotes + 1)
+        patchArticle(articleId, {inc_votes: 1}).then((article) => {
+            setVotes(article.votes)
+        }).catch((err) => {
+            setVotes(article.votes)
+        })
+    }
+    
+    useEffect(() => {
+        getArticle(articleId).then((article) => {
+            setIsLoading(false)
+            setArticle(article)
+            setVotes(article.votes)
+        })
+    },[])
+
     if(isLoading){
         return (
             <h2>Loading...</h2>
@@ -27,7 +49,10 @@ export default function ArticleDetail (){
                 <p>topic: {article.topic}</p>
                 <p>{article.body}</p>
                 <p>author: {article.author}</p>
+                <p>{votes}</p>
             </div>
+            <button onClick={handleUpVote}>upvote</button>
+            <button onClick={handleDownVote}>downvote</button>
             <h4>comments</h4>
             <CommentBox articleId={articleId}/>
         </>

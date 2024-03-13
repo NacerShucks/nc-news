@@ -10,6 +10,9 @@ export default function Navbar(){
             </NavLink>
             <div className="nav_menu" id="nav_menu">
                 <UserIcon/>
+                <NavLink to="/articles">
+                    <p>Articles</p>
+                </NavLink>
             </div>
                 
         </nav> 
