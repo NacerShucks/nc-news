@@ -5,4 +5,31 @@
   text-align: center;
 }
 
+.nav_container {
+  background-color: rgb(71, 74, 78);
+}
 
+.nav_menu {
+  background-color: black;
+}
+
+#listArticle {
+  list-style: none;
+}
+
+.ArticleCard {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  max-height: 10%;
+  overflow: hidden;
+  background-color: rgb(56, 56, 56);
+  margin-bottom: 2em;
+}
+
+.ArticleImage {
+  height: 100px;
+}
+
+.commentContainer {
+  background-color: rgb(56, 56, 56);
+}

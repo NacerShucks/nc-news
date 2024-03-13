@@ -25,7 +25,6 @@ function App() {
         <Route path='/user/:userId' element={<UserDetail/>}/>
       </Routes>
     </UserContext.Provider>
-    
   )
 }
 
