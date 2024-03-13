@@ -19,7 +19,6 @@ export const getArticles = (queries) => {
         }
     }
     const queryStr = queryArr.join("")
-    console.log("🚀 ~ getArticles ~ queryStr:", queryStr)
     
     return NCnewsAPI.get(`/articles${queryStr}`).then((response) => {
         return response.data

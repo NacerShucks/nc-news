@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticle } from "../api"
-
+import { CommentBox} from "./CommentBox"
 
 export default function ArticleDetail (){
 
@@ -23,6 +23,7 @@ export default function ArticleDetail (){
                 <p>{article.body}</p>
                 <p>author: {article.author}</p>
             </div>
+            <CommentBox articleId={articleId}/>
         </>
         
     )
