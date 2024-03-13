@@ -15,11 +15,10 @@ export const getArticles = (queries) => {
     const queryArr = []
     for (const key in queries){
         if(queries[key] !== ""){
-            queryArr.push(`?${key}=${queries[key]}`) 
+            queryArr.push(`?${key}=${queries.key}`) 
         }
     }
     const queryStr = queryArr.join("")
-    
     return NCnewsAPI.get(`/articles${queryStr}`).then((response) => {
         return response.data
     })
@@ -45,7 +44,11 @@ export const postComment = (articleId, postBody) => {
 } 
 
 export const getComments = (articleId) => {
+    console.log("🚀 ~ getComments ~ articleId:", articleId)
+    
     return NCnewsAPI.get(`/articles/${articleId}/comments`).then((response) => {
+        
+        console.log("🚀 ~ returnNCnewsAPI.get ~ response:", response)
         return response.data.comments
     })
 } 

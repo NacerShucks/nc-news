@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react"
 import { getComments } from "../api"
+import CommentCard from "./CommentCard"
 
 export default function CommentBox (props){
-    const [comments, setComments] = useState([
-        {comment_id: 1},
-        {comment_id: 2},
-        {comment_id: 3},
-        {comment_id: 4}
-    ])
-    const { article_id } = props
+    const [comments, setComments] = useState([])
+    const { articleId } = props
+    
     useEffect(() => {
-        getComments(article_id).then((comments) => {
+        console.log("getting comments")
+        getComments(articleId).then((comments) => {
             setComments(comments)
         }).catch((err) => {
             console.log("🚀 ~ getComments ~ err:", err)
@@ -21,11 +19,7 @@ export default function CommentBox (props){
         <ul>
         {
             comments.map((comment) => {
-                return (
-                    <li key={comment.comment_id}>
-                        
-                    </li>
-                )
+                return <CommentCard comment={comment}/>
             })
         }
         </ul>

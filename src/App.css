@@ -29,3 +29,7 @@
 .ArticleImage {
   height: 100px;
 }
+
+.commentContainer {
+  background-color: rgb(56, 56, 56);
+}
