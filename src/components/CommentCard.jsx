@@ -4,8 +4,8 @@ export default function CommentCard(props){
     
     return (
         <li>
-            <div className='commentContainer'>
-                <div className='commentBody'>
+            <div className='commentContainer' key={comment.comment_id + "container"}>
+                <div className='commentBody' key={comment.comment_id + "Body"}>
                     <p>{comment.body}</p>
                     <p>{comment.author}</p>
                     <p>{comment.created_at}</p>
