@@ -7,6 +7,7 @@ export default function CommentBox (props){
     const [comments, setComments] = useState([])
     const { articleId } = props
     
+    
     useEffect(() => {
         getComments(articleId).then((comments) => {
             setComments(comments)
