@@ -44,7 +44,6 @@ export const postComment = (articleId, postBody) => {
 } 
 
 export const getComments = (articleId) => {
-    
     return NCnewsAPI.get(`/articles/${articleId}/comments`).then((response) => {
         return response.data.comments
     })
