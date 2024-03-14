@@ -50,7 +50,7 @@ export const getComments = (articleId) => {
 } 
 
 export const deleteComment = (commentId) => {
-    return NCnewsAPI.post(`/comments/${commentId}`).then((response) => {
+    return NCnewsAPI.delete(`/comments/${commentId}`).then((response) => {
         return response.data
     })
 } 
