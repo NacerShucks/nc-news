@@ -33,12 +33,17 @@ export default function ArticleDetail (){
             setIsLoading(false)
             setArticle(article)
             setVotes(article.votes)
+        }).catch((err) => {
+            setIsLoading(false)
         })
     },[])
-
     if(isLoading){
         return (
             <h2>Loading...</h2>
+        )
+    }else if(article.article_id !== Number(articleId)){
+        return (
+            <h1>404 article not found</h1>
         )
     }else{
         return (

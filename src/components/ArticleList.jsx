@@ -14,16 +14,16 @@ export default function ArticleList (){
         sort_by: "",
         order: ""
     })
-
+    const [isLoading, setIsLoading] = useState(true)
+    const [loadingMsg, setLoadingMsg] = useState("Loading...")
 
     
     useEffect(() => {
-        console.log("getting articles...")
         getArticles(queries).then((articles) => {  
-            console.log("got articles", articles)
             setAllArticles(articles)
+            setIsLoading(false)
         }).catch((err) => {
-            console.log("🚀 ~ getArticles ~ err:", err)
+            setLoadingMsg("Something went wrong...")
         })
     }, [queries])
 
@@ -31,16 +31,28 @@ export default function ArticleList (){
         setArticleFeilds(Object.keys(allArticles[0]))
     }, [allArticles])
 
+    const articleLoader = () => {
+        if(isLoading){
+            return (
+                <h2>{loadingMsg}</h2>
+            )
+        }
+        return(
+            <ul id='listArticles'>
+            {allArticles.map((article) => {
+                return (<li key={article.article_id}>
+                    <ArticleCard article={article}/>
+                </li>)
+            })}
+            </ul>
+        )
+        
+    }
+
     return (
         <>
             <FilterBar queries={queries} setQueries={setQueries} authors={authors} articleFeilds={articleFeilds}/>
-            <ul id='listArticles'>
-                {allArticles.map((article) => {
-                    return (<li key={article.article_id}>
-                        <ArticleCard article={article}/>
-                    </li>)
-                })}
-            </ul>
+            {articleLoader()}
         </>
     )
 }
