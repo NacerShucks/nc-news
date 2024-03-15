@@ -10,6 +10,7 @@ export default function ArticleDetail (){
     const {articleId} = useParams()
     const [isLoading, setIsLoading] = useState(true)
     const [votes, setVotes] = useState(0)
+    const [isError, setIsError] = useState(false)
 
     const handleDownVote = () => {
         setVotes((currVotes) => currVotes - 1)
@@ -33,12 +34,18 @@ export default function ArticleDetail (){
             setIsLoading(false)
             setArticle(article)
             setVotes(article.votes)
+        }).catch((err) => {
+            setIsLoading(false)
+            setIsError(true)
         })
     },[])
-
     if(isLoading){
         return (
             <h2>Loading...</h2>
+        )
+    }else if(isError){
+        return (
+            <h1>404 article not found</h1>
         )
     }else{
         return (
