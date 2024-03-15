@@ -2,19 +2,22 @@ import { useState, useEffect } from "react"
 import { getTopics } from "../api"
 
 export default function FilterBar(props){
-    const {queries, setQueries, authors, articleFeilds} = props
+    const {setQueries, articleFeilds} = props
     const [topics, setTopics] = useState([])
     const [selects, setSelects] = useState({
         topic: "",
         sort_by: "",
         order: ""
     })
+
     getTopics().then((topics) => {
         setTopics(topics)
     })
 
 
     const handleSelects = (inputName, e) => {
+        console.log("🚀 ~ handleSelects ~ e:", e.target.value)
+        
         setSelects((currQueries) => {
             const newSelects = {...currQueries}
             newSelects[inputName] = e.target.value
@@ -25,6 +28,11 @@ export default function FilterBar(props){
     const handleSubmit = (e) => {
         e.preventDefault()
         setQueries(selects)
+        setSelects({
+            topic: "",
+            sort_by: "",
+            order: ""
+        })
     }
      
 

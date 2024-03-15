@@ -19,6 +19,7 @@ export default function ArticleList (){
 
     
     useEffect(() => {
+        setIsLoading(true)
         getArticles(queries).then((articles) => {  
             setAllArticles(articles)
             setIsLoading(false)
@@ -26,6 +27,8 @@ export default function ArticleList (){
             setLoadingMsg("Something went wrong...")
         })
     }, [queries])
+        
+       
 
     useEffect(() => {
         setArticleFeilds(Object.keys(allArticles[0]))
